@@ -1,11 +1,21 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import {
+  Canvas,
+  extend,
+  useFrame,
+  useLoader,
+  useThree,
+} from '@react-three/fiber';
 import { useLocation } from 'react-router-dom';
 import { TextureLoader } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
+extend({ OrbitControls });
 
 export function Box() {
   const location = useLocation();
   const [imageUrl, setImageUrl] = useState('');
+
   useEffect(() => {
     if (location.state.imageUrl) {
       setImageUrl(location.state.imageUrl);
@@ -19,6 +29,7 @@ export function Box() {
         height: '100vh',
       }}
     >
+      <CameraController />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       {imageUrl && (
@@ -40,6 +51,16 @@ export function BoxExample(props) {
   // Set up state for the hovered and active state
   // const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
+  const [hover, setHover] = useState(false);
+
+  useEffect(() => {
+    if (hover) {
+      document.body.style = 'cursor: pointer;';
+    } else {
+      document.body.style = 'cursor: default;';
+    }
+  }, [hover]);
+
   // Rotate mesh every frame, this is outside of React without overhead
   useFrame((state, delta) => {
     mesh.current.rotation.x += 0.01;
@@ -52,8 +73,8 @@ export function BoxExample(props) {
       ref={mesh}
       scale={active ? 1.5 : 1}
       onClick={(e) => setActive(!active)}
-      // onPointerOver={(e) => setHover(true)}
-      // onPointerOut={(e) => setHover(false)}
+      onPointerOver={(e) => setHover(true)}
+      onPointerOut={(e) => setHover(false)}
     >
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial map={texture} attach="material" />
@@ -69,4 +90,18 @@ const SimpleBox = (props) => {
       <meshStandardMaterial color={'hotpink'} />
     </mesh>
   );
+};
+
+const CameraController = () => {
+  const { camera, gl } = useThree();
+  useEffect(() => {
+    const controls = new OrbitControls(camera, gl.domElement);
+    controls.enableDamping = true;
+    controls.minDistance = 3;
+    controls.maxDistance = 20;
+    return () => {
+      controls.dispose();
+    };
+  }, [camera, gl]);
+  return null;
 };
