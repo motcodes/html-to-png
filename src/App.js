@@ -9,6 +9,10 @@ import {
   BrowserRouter as Router,
 } from 'react-router-dom';
 import { Box } from './Box';
+import { Ettiket } from './Ettiket';
+import { EttiketLarge } from './EttiketLarge';
+import { useHtmlToPng } from './useHtmlToPng';
+import { BoxLarge } from './BoxLarge';
 
 function App() {
   return (
@@ -20,26 +24,22 @@ function App() {
         <Route path="/box">
           <Box />
         </Route>
+        <Route path="/etikett">
+          <Ettiket />
+        </Route>
+        <Route path="/large">
+          <EttiketLarge />
+        </Route>
+        <Route path="/boxlarge">
+          <BoxLarge />
+        </Route>
       </Switch>
     </Router>
   );
 }
 
 function Home() {
-  const appRef = useRef(null);
-  const [imageUrl, setImageUrl] = useState('');
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    console.log(appRef.current);
-    toJpeg(appRef.current, {
-      width: 1000,
-      height: 1000,
-    }).then((dataUrl) => {
-      setImageUrl(dataUrl);
-      setTimeout(() => setLoading(false), 5000);
-    });
-  }, []);
+  const [appRef, imageUrl, isLoading] = useHtmlToPng();
 
   if (!isLoading) {
     return (

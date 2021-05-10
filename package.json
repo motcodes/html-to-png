@@ -8,10 +8,12 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "html-to-image": "^1.6.0",
+    "leva": "^0.9.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "styled-components": "^5.3.0",
     "three": "^0.127.0",
     "web-vitals": "^1.0.1"
   },
@@ -43,6 +45,7 @@
     "@babel/core": "^7.13.15",
     "@babel/plugin-transform-react-jsx": "^7.12.17",
     "@craco/craco": "^6.1.1",
+    "babel-plugin-styled-components": "^1.12.0",
     "craco-esbuild": "^0.3.1"
   },
   "bable": {
