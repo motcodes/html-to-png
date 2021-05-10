@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from './Logo-Icon-Black.svg';
 import { useHtmlToPng } from './useHtmlToPng';
 
 export const EttiketLarge = (props) => {

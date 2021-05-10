@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import logo from './Logo-Icon.svg';
 import './App.css';
-import { toJpeg } from 'html-to-image';
 import {
   Redirect,
   Route,
   Switch,
   BrowserRouter as Router,
+  Link,
 } from 'react-router-dom';
 import { Box } from './Box';
 import { Ettiket } from './Ettiket';
@@ -39,7 +39,7 @@ function App() {
 }
 
 function Home() {
-  const [appRef, imageUrl, isLoading] = useHtmlToPng();
+  const [generateImage, appRef, imageUrl, isLoading] = useHtmlToPng();
 
   if (!isLoading) {
     return (
@@ -57,15 +57,40 @@ function Home() {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>HTML to PNG to 3D Texture</h1>
-          <p>by @motcodes</p>
-          <a
-            className="App-link"
-            href="https://github.com/motcodes/html-to-png"
-            target="_blank"
-            rel="noopener noreferrer"
+          <p>
+            by @motcodes -{' '}
+            <a
+              className="App-link"
+              href="https://github.com/motcodes/html-to-png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Github Repo
+            </a>
+          </p>
+          <button
+            style={{
+              marginTop: 16,
+              padding: '12px 48px',
+              border: '2px solid white',
+              borderRadius: 6,
+              background: 'black',
+              color: 'white',
+              fontSize: 16,
+              fontWeight: 600,
+              cursor: 'pointer',
+              marginBottom: 16,
+            }}
+            onClick={generateImage}
           >
-            Github Repo
-          </a>
+            Generate Texture
+          </button>
+          <p>
+            Check out:{' '}
+            <Link className="App-link" to="large">
+              Apollo Foods Texture Demo
+            </Link>
+          </p>
         </header>
       </div>
     );
